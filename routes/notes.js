@@ -4,12 +4,12 @@ const { readFromFile, readAndAppend } = require('../helpers/fsHelpers');
 const uuid = require('../helpers/uuid');
 
 // GET Route for retrieving all stored notes
-notes.get('/notes', (req, res) => { // Switched the order of req and res parameters
+notes.get('/api/notes', (req, res) => {
   console.info(`${req.method} request received for notes`);
   readFromFile('../db/db.json').then((data) => res.json(JSON.parse(data)));
-});
+})
 
-notes.post('/notes', (req, res) => { // Switched the order of req and res parameters
+notes.post('/notes', (req, res) => {
   console.info(`${req.method} request received to add a note`);
 
   const { title, text } = req.body;
@@ -27,8 +27,10 @@ notes.post('/notes', (req, res) => { // Switched the order of req and res parame
 
     res.json('Success');
   } else {
-    res.json('Did not post successfully');
+    res.error('Did not post successfully');
   }
 });
+
+
 
 module.exports = notes;
